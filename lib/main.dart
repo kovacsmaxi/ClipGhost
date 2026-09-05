@@ -426,11 +426,6 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
         _showToast('Err: $e', isError: true);
       }
     }
-  } catch (e) {
-        debugPrint('ClipGhost Haptic error: $e');
-        HapticFeedback.vibrate();
-      }
-    }
   }
 
   Future<void> _wipeClipboardImmediately() async {
