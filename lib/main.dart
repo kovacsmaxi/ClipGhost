@@ -415,7 +415,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
 
   void _triggerHaptic() {
     if (_hapticFeedbackEnabled) {
-      HapticFeedback.mediumImpact();
+      HapticFeedback.vibrate();
     }
   }
 
