@@ -413,8 +413,10 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     await prefs.setString('saved_contacts_json', jsonEncode(_contacts));
   }
 
-  void _triggerHaptic() {
+  void _triggerHaptic() async {
     if (_hapticFeedbackEnabled) {
+      HapticFeedback.heavyImpact();
+      await Future.delayed(const Duration(milliseconds: 40));
       HapticFeedback.vibrate();
     }
   }
