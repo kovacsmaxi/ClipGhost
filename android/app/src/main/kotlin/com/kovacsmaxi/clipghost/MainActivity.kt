@@ -17,38 +17,43 @@ class MainActivity: FlutterActivity() {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
             if (call.method == "vibrateHardware") {
-                triggerDirectVibration()
-                result.success(true)
+                val status = triggerDirectVibration()
+                result.success(status)
             } else {
                 result.notImplemented()
             }
         }
     }
 
-    private fun triggerDirectVibration() {
-        try {
+    private fun triggerDirectVibration(): String {
+        return try {
             val audioAttributes = AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                .setUsage(AudioAttributes.USAGE_ALARM)
                 .build()
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                val vibratorManager = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-                val vibrator = vibratorManager.defaultVibrator
-                val effect = VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
-                vibrator.vibrate(effect, audioAttributes)
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                val vm = getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+                vm.defaultVibrator
+            } else {
                 @Suppress("DEPRECATION")
-                val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                val effect = VibrationEffect.createOneShot(100, VibrationEffect.DEFAULT_AMPLITUDE)
+                getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+            }
+
+            if (!vibrator.hasVibrator()) {
+                return "ERR_NO_HARDWARE"
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val effect = VibrationEffect.createOneShot(180, VibrationEffect.DEFAULT_AMPLITUDE)
                 vibrator.vibrate(effect, audioAttributes)
             } else {
                 @Suppress("DEPRECATION")
-                val vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-                vibrator.vibrate(100)
+                vibrator.vibrate(180)
             }
+            "VIBRATED_OK"
         } catch (e: Exception) {
-            e.printStackTrace()
+            "ERR: ${e.message}"
         }
     }
 }
