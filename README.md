@@ -12,8 +12,8 @@ ClipGhost is a lightweight, offline security utility designed to turn any messag
 
 <p align="center">
   <img src="screenshots/screenshot_main.png" width="23%" alt="ClipGhost Main Screen" />
-  <img src="screenshots/screenshot_encrypt.png" width="23%" alt="Encrypt & Copy" />
   <img src="screenshots/screenshot_decrypt.png" width="23%" alt="Decrypted View" />
+  <img src="screenshots/screenshot_encrypt.png" width="23%" alt="Encrypt & Copy" />
   <img src="screenshots/screenshot_error.png" width="23%" alt="Error Handling" />
 </p>
 
