@@ -413,6 +413,8 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     await prefs.setString('saved_contacts_json', jsonEncode(_contacts));
   }
 
+  static const MethodChannel _vibrateChannel = MethodChannel("com.kovacsmaxi.clipghost/vibrate");
+
   void _triggerHaptic() async {
     if (_hapticFeedbackEnabled) {
       try {
