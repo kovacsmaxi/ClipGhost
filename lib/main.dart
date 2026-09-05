@@ -418,14 +418,9 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   void _triggerHaptic() async {
     if (_hapticFeedbackEnabled) {
       try {
-        await _vibrateChannel.invokeMethod('vibrateHardware');
+        await _vibrateChannel.invokeMethod("vibrateHardware");
       } catch (_) {
         HapticFeedback.vibrate();
-      }
-    }
-  }
-      } catch (e) {
-        _showToast('Err: $e', isError: true);
       }
     }
   }
