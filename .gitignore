@@ -46,3 +46,7 @@ app.*.map.json
 
 # Widget Preview related
 .widget_preview/
+upload-keystore.jks
+key.properties
+upload-keystore.jks
+key.properties
